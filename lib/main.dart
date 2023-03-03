@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-// 夢見のチュートリアル
+// ゆめみのチュートリアル
 void main() {
   runApp(const MyApp());
 }
