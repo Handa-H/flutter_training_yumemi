@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ゆめみのチュートリアル
 void main() {
   runApp(const MyApp());
 }
