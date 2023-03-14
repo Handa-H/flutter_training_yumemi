@@ -37,7 +37,6 @@ dependencies:
       url: https://github.com/yumemi-inc/flutter-training-template.git
       ref: main
       path: packages/yumemi_weather
-  
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -67,7 +66,6 @@ flutter:
   assets:
     - assets/
     - assets/images/
-
 
   # To add assets to your application, add an assets section, like this:
   # assets:
