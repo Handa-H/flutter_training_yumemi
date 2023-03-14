@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_training/wether_model.dart';
+import 'package:provider/provider.dart';
 
 // ゆめみのチュートリアル
 void main() {
@@ -16,7 +18,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: ChangeNotifierProvider(
+        create: (context) => WeatherModel(),
+        child: const MyHomePage(title: 'Flutter Demo Home Page'),
+      ),
     );
   }
 }
@@ -26,64 +31,75 @@ class MyHomePage extends StatelessWidget {
   final String title;
 
   @override
-  // ignore: prefer_const_constructors
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: FractionallySizedBox(
           widthFactor: 0.5,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AspectRatio(
-                aspectRatio: 1 / 1,
-                child: Placeholder(),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        '**℃',
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                              color: Colors.blue,
-                            ),
-                      ),
+          child: Consumer<WeatherModel>(
+            builder: (context, model, child) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AspectRatio(
+                    aspectRatio: 1 / 1,
+                    child: model.weatherImage ?? const Placeholder(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            '**℃',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge
+                                ?.copyWith(
+                                  color: Colors.blue,
+                                ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            '**℃',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge
+                                ?.copyWith(
+                                  color: Colors.red,
+                                ),
+                          ),
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      child: Text(
-                        '**℃',
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                              color: Colors.red,
-                            ),
-                      ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 80),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextButton(
+                            onPressed: () => print('close'),
+                            child: const Text('close'),
+                          ),
+                        ),
+                        Expanded(
+                          child: TextButton(
+                            onPressed: () {
+                              model.reloadWeather();
+                            },
+                            child: const Text('reload'),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 80),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        '**℃',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        '**℃',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
+                  )
+                ],
+              );
+            },
           ),
         ),
       ),
