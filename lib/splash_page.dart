@@ -3,6 +3,7 @@ import 'package:flutter_training/weather_page.dart';
 import 'package:flutter_training/wether_model.dart';
 import 'package:provider/provider.dart';
 
+/// 最初に表示される画面
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
