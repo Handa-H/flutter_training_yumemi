@@ -7,6 +7,24 @@ class WeatherPage extends StatelessWidget {
   const WeatherPage({super.key, required this.title});
   final String title;
 
+  void showAlert(BuildContext context, String message) {
+    WidgetsBinding.instance.endOfFrame.then((value) {
+      showDialog<String>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('エラーが発生'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,12 +33,17 @@ class WeatherPage extends StatelessWidget {
           widthFactor: 0.5,
           child: Consumer<WeatherModel>(
             builder: (context, model, child) {
+              if (model.weatherResult?.successed == false) {
+                showAlert(context, model.weatherResult!.error!.toString());
+              }
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AspectRatio(
                     aspectRatio: 1 / 1,
-                    child: model.weatherImage ?? const Placeholder(),
+                    child: model.weatherResult?.successed == true
+                        ? model.getWetherImage()
+                        : const Placeholder(),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -68,7 +91,7 @@ class WeatherPage extends StatelessWidget {
                         Expanded(
                           child: TextButton(
                             onPressed: () {
-                              model.reloadWeather();
+                              model.reloadWeatherWithError();
                             },
                             child: const Text('reload'),
                           ),
