@@ -1,15 +1,26 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_training/weather_result.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 class WeatherModel extends ChangeNotifier {
 
   final yumemiWeather = YumemiWeather();
 
-  String? _weatherString;
+  WeatherResult? weatherResult;
 
-  SvgPicture? get weatherImage {
-    switch (_weatherString) {
+  void reloadWeatherWithError() {
+    try {
+      final weather = yumemiWeather.fetchThrowsWeather('area');
+      weatherResult = WeatherResult(successed: true, weather: weather);
+    } on YumemiWeatherError catch (e){
+      weatherResult = WeatherResult(successed: false, error: e);
+    }
+    notifyListeners();
+  }
+  
+  SvgPicture? getWetherImage() {
+    switch (weatherResult?.weather) {
       case 'rainy':
         return SvgPicture.asset(
           'assets/images/rainy.svg',
@@ -24,10 +35,5 @@ class WeatherModel extends ChangeNotifier {
         );
     }
     return null;
-  }
-
-  void reloadWeather() {
-    _weatherString = yumemiWeather.fetchSimpleWeather();
-    notifyListeners();
   }
 }
