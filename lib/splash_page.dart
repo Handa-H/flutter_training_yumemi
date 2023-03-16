@@ -5,14 +5,14 @@ import 'package:flutter_training/weather_page.dart';
 import 'package:provider/provider.dart';
 
 /// 最初に表示される画面
-class SplashPage extends StatefulWidget{
+class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
   @override
   State<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> with endOfFrameMixin  {
+class _SplashPageState extends State<SplashPage> with endOfFrameMixin {
   @override
   void doAfterFrame() {
     _waitAndPass();
@@ -23,9 +23,9 @@ class _SplashPageState extends State<SplashPage> with endOfFrameMixin  {
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
-        create: (context) => WeatherModel(),
-        child: const WeatherPage(title: 'Flutter Demo Home Page'),
-      ),
+          create: (context) => WeatherModel(),
+          child: const WeatherPage(title: 'Flutter Demo Home Page'),
+        ),
       ),
     );
   }
