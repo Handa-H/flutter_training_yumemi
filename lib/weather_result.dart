@@ -21,7 +21,7 @@ class Weather {
     required this.date,
   });
 
-  factory Weather.fromJson(dynamic json) {
+  factory Weather.fromJson(Map<String, dynamic> json) {
     return Weather(
       weatherCondition: json['weather_condition'] as String,
       maxTemperature: json['max_temperature'] as int,

@@ -51,7 +51,7 @@ class WeatherPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            '${model.weatherResult?.weather?.minTemperature ?? '?'}℃',
+                            model.getMinTemperture(),
                             textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme
@@ -63,7 +63,7 @@ class WeatherPage extends StatelessWidget {
                         ),
                         Expanded(
                           child: Text(
-                            '${model.weatherResult?.weather?.maxTemperature ?? '?'}℃',
+                            model.getMaxTemperture(),
                             textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme
