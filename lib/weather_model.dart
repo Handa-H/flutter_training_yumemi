@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_training/weather_result.dart';
+import 'package:flutter_training/model/weather.dart';
+import 'package:flutter_training/model/weather_result.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 class WeatherModel extends ChangeNotifier {
