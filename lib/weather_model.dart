@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_training/model/weather.dart';
+import 'package:flutter_training/model/weather_request.dart';
 import 'package:flutter_training/model/weather_result.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
@@ -13,12 +14,10 @@ class WeatherModel extends ChangeNotifier {
 
   void reloadWeatherWithError() {
     try {
-      const jsonString = '''
-        {
-            "area": "tokyo",
-            "date": "2020-04-01T12:00:00+09:00"
-        }''';
-      final jsonWeather = yumemiWeather.fetchWeather(jsonString);
+      final requestParam = WeatherRequest(area: 'area', date: DateTime.now());
+      final jsonWeather = yumemiWeather.fetchWeather(
+        jsonEncode(requestParam.toJson()),
+      );
       final weather =
           Weather.fromJson(jsonDecode(jsonWeather) as Map<String, dynamic>);
       weatherResult = WeatherResult(successed: true, weather: weather);
